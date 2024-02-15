@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .contenedor {
+            background: cadetblue;
+            width: 100vw;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+        }
+
+        p {
+            font-size: 2rem;
+            padding: 15%;
+        }
+
+        button {
+            font-size: 2rem;
+            padding: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+
+        #yesBtn {
+            transform: scale(1);
+        }
+
+        #noBtn {
+            transform: scale(1);
+            margin-left: 20px; /* Agregar espacio entre los botones */
+        }
+
+        .yesClicked {
+            background-color: green;
+        }
+
+        .noClicked {
+            transform: scale(0.5); /* Reducir tamaño del botón "no" */
+        }
+
+        #yesBtn.yesClicked {
+            transform: scale(2); /* Aumentar tamaño del botón "si" */
+        }
+
+        .luciernaga {
+            width: 5px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 0;
+            animation: luciernagaAnim 5s infinite;
+        }
+
+        @keyframes luciernagaAnim {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        #mensaje {
+            font-size: 2rem;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <p>¿Quieres ser mi media naranja ?</p>
+        <button id="yesBtn">Si</button>
+        <button id="noBtn">No</button>
+        <div id="mensaje"></div>
+    </div>
+
+    <!-- Agregar la etiqueta audio para reproducir la música -->
+    <audio id="music" loop>
+        <source src="Sergio.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento audio.
+    </audio>
+
+    <script>
+        const yesBtn = document.querySelector('#yesBtn');
+        const noBtn = document.querySelector('#noBtn');
+        const mensajeDiv = document.querySelector('#mensaje');
+        const music = document.getElementById('music');
+
+        // Reproducir música al hacer clic en cualquier botón
+        yesBtn.addEventListener('click', playMusic);
+        noBtn.addEventListener('click', playMusic);
+
+        function playMusic() {
+            music.play().catch(function(error) {
+                console.error('No se pudo reproducir la música:', error);
+            });
+            yesBtn.removeEventListener('click', playMusic);
+            noBtn.removeEventListener('click', playMusic);
+        }
+
+        yesBtn.addEventListener('click', function() {
+            mensajeDiv.textContent = 'Sabía que dirías que Sí, Sabia que me amabas bebé ❤️';
+            mensajeDiv.style.display = 'block';
+            noBtn.style.display = 'none';
+            yesBtn.classList.add('yesClicked');
+        });
+
+        noBtn.addEventListener('click', function() {
+            const frases = [
+                "Sé que quieres...",
+                "Vamos, no te niegues...",
+                "¿Seguro que no?",
+                "Piénsalo bien...",
+                "Tal vez te lo estás perdiendo...",
+                "No te arrepentirás...",
+                "Dame una oportunidad...",
+                "Podríamos ser perfectos juntos...",
+                "Quizás no lo ves ahora, pero...",
+                "La vida es corta, vamos a intentarlo...",
+                "No tengas miedo...",
+                "¿Qué tienes que perder?",
+                "Tu corazón lo sabe...",
+                "Nunca es tarde para el amor...",
+                "Atrévete a soñar...",
+                "La magia sucede cuando menos lo esperas...",
+                "No dejes que el miedo te detenga...",
+                "Podríamos hacer una gran historia juntos...",
+                "Lo bueno está por venir...",
+                "¿Por qué no intentarlo?",
+                "La vida está llena de sorpresas...",
+                "No te quedes con la duda...",
+                "Te esperaré...",
+                "¿Qué te detiene?",
+                "Juntos podemos superarlo todo..."
+            ];
+            const randomIndex = Math.floor(Math.random() * frases.length);
+            mensajeDiv.textContent = frases[randomIndex];
+            mensajeDiv.style.display = 'block';
+            noBtn.style.backgroundColor = getRandomColor();
+        });
+
+        // Función para obtener un color aleatorio
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Crear luciérnagas
+        const contenedor = document.querySelector('.contenedor');
+        for (let i = 0; i < 50; i++) {
+            const luciernaga = document.createElement('div');
+            luciernaga.classList.add('luciernaga');
+            luciernaga.style.left = `${Math.random() * 100}vw`;
+            luciernaga.style.top = `${Math.random() * 100}vh`;
+            contenedor.appendChild(luciernaga);
+        }
+    </script>
+</body>
+</html>
